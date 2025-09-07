@@ -1,19 +1,31 @@
 {% extends "_base.html" %}
 
 {% block body %}
-  {% if counter %}
-    <p>Состояние счётчика: <b>{{ counter.value }}</b></p>
-    <p>
-      <a href="{% url 'app_counter:decrease_counter' %}">Минус 1</a>
-      <a href="{% url 'app_counter:increase_counter' %}">Плюс 1</a>
-    </p>
+
+  <p>
+    <a href="{% url 'app_counter:create_counter' %}"><button>Создать</button></a>
+  </p>
+
+
+ {% for counter in counters %}
+
+     <li>
+       id: {{ counter.pk }}
+       <a href="{% url 'app_counter:decrease_counter' counter.pk %}"><button>-</button></a>&nbsp
+       {{ counter.value }} &nbsp
+       <a href="{% url 'app_counter:increase_counter' counter.pk %}"><button>+</button></a>&nbsp
+       <a href="{% url 'app_counter:delete_counter' counter.pk %}"><button>Удалить</button></a>
+       {% if counter.is_favorite %}
+       <a href="{% url 'app_counter:is_favorite_counter' counter.pk %}"><button style="background-color: rgb(255, 0, 0)">Удалить из фаворитов</button></a>
+       {% else %}
+       <a href="{% url 'app_counter:is_favorite_counter' counter.pk %}"><button style="background-color: rgb(51, 255, 153)">Назначить фаворитом</button></a>
+      {% endif %}
+     </li>
+   {% endfor %}
+
     <p>
       <a href="{% url 'app_counter:index' %}">На главную</a>
     </p>
-  {% else %}
-    <p>Счётчика нет.</p>
-    <p>
-      <a href="{% url 'app_counter:create_counter' %}">Создать</a>
-    </p>
-  {% endif %}
+
+
 {% endblock %}
