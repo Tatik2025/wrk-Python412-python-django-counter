@@ -12,7 +12,6 @@
         <form action="{% url 'app_accounts:logout' %}" method="post">
             {% csrf_token %}
             <button type="submit">Выйти</button>
-
         </form>
     {% else %}
         <p>
@@ -22,12 +21,10 @@
     {% endif %}
 
     <div>
-        <br>
-        <h5>Счетчики-фавориты пользователей:</h5>
         {% if counters %}
             {% for counter in counters %}
                 {% if counter.user %}
-                    <p>Пользователь <b>{{ counter.user }} Счетчик id: {{ counter.id }}</b> насчитал: {{ counter.value }}</p>
+                    <p>Пользователь <b>{{ counter.user }}</b> насчитал: {{ counter.value }}</p>
                 {% else %}
                     <p>Исчезнувший пользователь насчитал: {{ counter.value }}</p>
                 {% endif %}
